@@ -33,6 +33,9 @@ def export_file(path):
         else:
             result["authors"] = [authors1]
         post_ts = arrow.get(all_lines[2].lstrip('-- ')).to('local').timestamp
+        content = ''
+        for i in all_lines[4:]:
+            content += i
         if all_lines[0]:
             result["title"] = all_lines[0].lstrip('-- ')
         if all_lines[2]:
@@ -40,6 +43,8 @@ def export_file(path):
             result["post_ts"] = post_ts
         if all_lines[3]:
             result["url"] = all_lines[3].lstrip('-- ')
+        if content:
+            result["content"] = content
         return result
 
 def start(start_path):
