@@ -36,6 +36,11 @@ def export_file(path):
         content = ''
         for i in all_lines[4:]:
             content += i
+        if len(content.strip()) == 0:
+            return
+        p = re.compile(r'To contact the reporter on story:.*',re.S)
+        content1 = content.strip()
+        content2 = p.sub(r'',content1)
         if all_lines[0]:
             result["title"] = all_lines[0].lstrip('-- ')
         if all_lines[2]:
@@ -44,7 +49,7 @@ def export_file(path):
         if all_lines[3]:
             result["url"] = all_lines[3].lstrip('-- ')
         if content:
-            result["content"] = content
+            result["content"] = content2.strip()
         return result
 
 def start(start_path):
